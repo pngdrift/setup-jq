@@ -184,11 +184,11 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const version = core.getInput('version');
-            core.debug('version ${version} ');
+            core.debug(`version ${version} platform: ${os.platform()}, arch:${os.arch()}`);
             yield installer.install(version);
         }
         catch (error) {
-            core.setFailed(error.message);
+            core.setFailed(error);
         }
     });
 }
