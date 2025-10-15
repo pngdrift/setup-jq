@@ -77,6 +77,9 @@ function getAppName(tool) {
                 case 'x64':
                     appname = `${tool}-linux64`;
                     break;
+                case 'arm64':
+                    appname = `${tool}-linux-arm64`;
+                    break;
             }
             break;
         case 'darwin':
@@ -95,7 +98,8 @@ function getAppName(tool) {
             break;
     }
     if (!appname) {
-        throw `Unsupported platform. platform:${os.platform()}, arch:${os.arch()}`;
+        core.error(`Unsupported platform. platform:${os.platform()}, arch:${os.arch()}`);
+        throw new Error(`Unsupported platform. platform:${os.platform()}, arch:${os.arch()}`);
     }
     return appname;
 }
@@ -180,15 +184,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(484));
 const installer = __importStar(__nccwpck_require__(666));
+const os = __importStar(__nccwpck_require__(857));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const version = core.getInput('version');
-            core.debug(`version ${version} platform: ${os.platform()}, arch:${os.arch()}`);
+            core.debug(`version ${version} platform:${os.platform()}, arch:${os.arch()}`);
             yield installer.install(version);
         }
         catch (error) {
-            core.setFailed(error);
+            core.setFailed(error.message);
         }
     });
 }
