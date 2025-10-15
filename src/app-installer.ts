@@ -53,7 +53,7 @@ function getAppName(tool: string): string {
   }
   if (!appname) {
     core.error(`Unsupported platform. platform:${os.platform()}, arch:${os.arch()}`);
-    throw `Unsupported platform. platform:${os.platform()}, arch:${os.arch()}`
+    throw new Error(`Unsupported platform. platform:${os.platform()}, arch:${os.arch()}`)
   }
   return appname
 }
